@@ -48,9 +48,10 @@ function doPost(e) {
     const lock = LockService.getScriptLock();
     lock.waitLock(15000);
 
+    let nextId;
     try {
       const sheet = getOrCreateSheet(SHEET_NAME);
-      const nextId = sheet.getLastRow(); // cabeçalho = linha 1, logo lead #1 = linha 2
+      nextId = sheet.getLastRow(); // cabeçalho = linha 1, logo lead #1 = linha 2
       const timestamp = Utilities.formatDate(
         new Date(),
         'America/Sao_Paulo',
