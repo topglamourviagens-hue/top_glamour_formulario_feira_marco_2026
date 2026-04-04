@@ -57,7 +57,7 @@ form.addEventListener('submit', function (e) {
   // Buffer local — seguro contra falha de rede em 4G instável
   try {
     localStorage.setItem('tg_lead_' + Date.now(), JSON.stringify(payload));
-  } catch (e) { /* localStorage indisponível — continuar normalmente */ }
+  } catch (_storageErr) { /* localStorage indisponível — continuar normalmente */ }
 
   // Envio fire-and-forget (no-cors necessário para GAS Web App)
   // A tela de sucesso é exibida otimisticamente — dados já estão no localStorage como backup
