@@ -557,10 +557,10 @@ input.invalid {
 }
 
 .stamp-icon {
-  font-size: 1.7rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   color: var(--white);
-  font-weight: 700;
-  line-height: 1;
 }
 
 /* Logo grande na tela de sucesso */
@@ -633,6 +633,9 @@ input.invalid {
 }
 
 .links-block-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
   font-size: 0.7rem;
   font-weight: 600;
   letter-spacing: 0.14em;
@@ -647,13 +650,21 @@ input.invalid {
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 6px;
   height: 46px;
   border-radius: var(--radius-md);
   font-family: var(--font-body);
   font-size: 0.9rem;
   font-weight: 500;
   text-decoration: none;
-  transition: transform var(--transition), opacity var(--transition);
+  transition: transform var(--transition), opacity var(--transition), filter var(--transition);
+}
+
+@media (hover: hover) {
+  .link-btn:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.1);
+  }
 }
 
 .link-btn:active {
@@ -700,6 +711,7 @@ input.invalid {
   border: 1px solid rgba(255,255,255,0.1);
   border-radius: var(--radius-md);
   text-decoration: none;
+  color: var(--white);
   -webkit-tap-highlight-color: transparent;
   transition: background var(--transition), border-color var(--transition);
 }
@@ -716,12 +728,6 @@ input.invalid {
   }
 }
 
-.city-flag {
-  font-size: 1.25rem;
-  flex-shrink: 0;
-  line-height: 1;
-}
-
 .city-name {
   font-size: 0.95rem;
   font-weight: 500;
@@ -730,9 +736,9 @@ input.invalid {
 }
 
 .city-arrow {
-  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
   color: var(--gold);
-  font-weight: 700;
   flex-shrink: 0;
 }
 
@@ -789,5 +795,14 @@ input.invalid {
   to {
     opacity: 1;
     transform: translateY(0) scale(1);
+  }
+}
+
+/* ── Acessibilidade: respeita preferência por menos movimento ── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }
