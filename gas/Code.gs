@@ -77,9 +77,10 @@ function doPost(e) {
     let nextId;
     try {
       const sheet = getOrCreateSheet(SHEET_NAME);
-      // getLastRow() antes do append: cabeçalho=1 → nextId=1 (vai p/ linha 2)
-      // N leads existentes → nextId=N+1, sempre contínuo e sem gaps
-      nextId = sheet.getLastRow();
+      // Conta IDs reais na coluna A (ignora linhas vazias e formatação residual)
+      const colA = sheet.getRange('A2:A').getValues().flat();
+      const count = colA.filter(function(v) { return v !== '' && v !== null && String(v).trim() !== ''; }).length;
+      nextId = count + 1;
       const timestamp = Utilities.formatDate(
         new Date(),
         'America/Sao_Paulo',
