@@ -77,11 +77,9 @@ function doPost(e) {
     let nextId;
     try {
       const sheet = getOrCreateSheet(SHEET_NAME);
-      const lastRow = sheet.getLastRow();
-      const existingIds = lastRow > 1
-        ? sheet.getRange(2, 1, lastRow - 1, 1).getValues().flat().map(Number)
-        : [];
-      nextId = existingIds.length > 0 ? Math.max(...existingIds) + 1 : 1;
+      // getLastRow() antes do append: cabeçalho=1 → nextId=1 (vai p/ linha 2)
+      // N leads existentes → nextId=N+1, sempre contínuo e sem gaps
+      nextId = sheet.getLastRow();
       const timestamp = Utilities.formatDate(
         new Date(),
         'America/Sao_Paulo',
