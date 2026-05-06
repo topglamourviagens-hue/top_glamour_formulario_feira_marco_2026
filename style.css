@@ -1,35 +1,51 @@
 /* ============================================================
-   Top Glamour Viagens — Identidade Visual
-   Design: Luxury Travel · Boarding Pass Aesthetic
-   Paleta: Azul Profundo #1E2459 + Âmbar #D4912C + Cinza #B7AAAA
+   Top Glamour Viagens — Sistema de Design Oficial (tokens v01)
+   Território: Institucional · MASTER.md 2026-05-02
+   Paleta: Azul Marinho #0B1E3F · Dourado #C9A961 · Branco Viagem #FAF7F1
    ============================================================ */
 
-/* ── Variáveis ─────────────────────────────────────────────── */
+/* ── Tokens oficiais da marca ──────────────────────────────── */
 :root {
-  --navy:        #1E2459;
-  --navy-dark:   #141840;
-  --navy-light:  #262d72;
-  --gold:        #D4912C;
-  --gold-bright: #E5A840;
-  --gold-pale:   #faf0dd;
-  --warm-gray:   #B7AAAA;
-  --black:       #0a0a0a;
-  --gray-mid:    #D0D0D0;
-  --gray-light:  #F5F4F2;
-  --white:       #FFFFFF;
-  --cream:       #FDFBF8;
+  /* Paleta Top Glamour (fonte: tokens.json v01) */
+  --tg-azul-marinho:    #0B1E3F;
+  --tg-azul-noite:      #060F26;
+  --tg-azul-medio:      #142B58;
+  --tg-dourado:         #C9A961;
+  --tg-dourado-claro:   #E0C078;
+  --tg-dourado-profundo:#A88840;
+  --tg-branco-viagem:   #FAF7F1;
+  --tg-bege-areia:      #E8DFCB;
+  --tg-preto-elegancia: #0A0A0A;
+  --tg-cinza-quente:    #5A5A5A;
+  --tg-cinza-suave:     #B8B5AC;
 
-  --font-display: 'Cormorant Garamond', Georgia, serif;
-  --font-body:    'DM Sans', -apple-system, sans-serif;
+  /* Aliases de conveniência (retrocompatibilidade) */
+  --navy:        var(--tg-azul-marinho);
+  --navy-dark:   var(--tg-azul-noite);
+  --navy-light:  var(--tg-azul-medio);
+  --gold:        var(--tg-dourado);
+  --gold-bright: var(--tg-dourado-claro);
+  --gold-pale:   #f5ecda;
+  --warm-gray:   var(--tg-cinza-suave);
+  --black:       var(--tg-preto-elegancia);
+  --gray-mid:    var(--tg-bege-areia);
+  --gray-light:  #EDE8DF;
+  --white:       #FFFFFF;
+  --cream:       var(--tg-branco-viagem);
+
+  /* Tipografia oficial */
+  --font-display: 'Cormorant Garamond', 'Times New Roman', serif;
+  --font-body:    'Inter', 'Arimo', system-ui, sans-serif;
+  --font-mono:    'JetBrains Mono', ui-monospace, monospace;
 
   --radius-sm:  6px;
   --radius-md:  12px;
   --radius-lg:  20px;
   --radius-xl:  28px;
 
-  --shadow-card: 0 20px 60px rgba(30, 36, 89, 0.18),
-                 0 4px 16px rgba(0,0,0,0.10);
-  --shadow-btn:  0 4px 20px rgba(212, 145, 44, 0.45);
+  --shadow-card: 0 8px 40px rgba(11, 30, 63, 0.10),
+                 0 2px 8px rgba(11, 30, 63, 0.06);
+  --shadow-btn:  0 4px 20px rgba(168, 136, 64, 0.30);
 
   --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -46,43 +62,25 @@ html {
 body {
   font-family: var(--font-body);
   font-weight: 400;
-  color: var(--black);
-  background: var(--navy);
+  color: var(--tg-azul-marinho);
+  background: var(--cream);
   min-height: 100vh;
   overflow-x: hidden;
 }
 
-/* ── Fundo com textura geométrica ──────────────────────────── */
+/* ── Fundo institucional — Território Branco Viagem ────────── */
 .page-bg {
   position: fixed;
   inset: 0;
   background:
-    radial-gradient(ellipse at 15% 10%, rgba(255,255,255,0.05) 0%, transparent 55%),
-    radial-gradient(ellipse at 85% 85%, rgba(212,145,44,0.10) 0%, transparent 55%),
-    linear-gradient(160deg, var(--navy-dark) 0%, var(--navy) 60%, var(--navy-light) 100%);
+    radial-gradient(ellipse at 20% 0%,  rgba(201,169,97,0.06) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 100%, rgba(11,30,63,0.05)  0%, transparent 50%),
+    linear-gradient(160deg, var(--cream) 0%, #EDE8DF 100%);
   z-index: 0;
 }
 
-/* Linhas de latitude/longitude sutis */
 .page-bg::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-image:
-    repeating-linear-gradient(
-      0deg,
-      rgba(255,255,255,0.025) 0px,
-      rgba(255,255,255,0.025) 1px,
-      transparent 1px,
-      transparent 60px
-    ),
-    repeating-linear-gradient(
-      90deg,
-      rgba(255,255,255,0.025) 0px,
-      rgba(255,255,255,0.025) 1px,
-      transparent 1px,
-      transparent 60px
-    );
+  content: none;
 }
 
 /* ── Wrapper ───────────────────────────────────────────────── */
@@ -132,7 +130,7 @@ body {
   font-family: var(--font-display);
   font-size: 1.6rem;
   font-weight: 700;
-  color: var(--white);
+  color: var(--tg-azul-marinho);
   letter-spacing: 0.05em;
 }
 
@@ -158,12 +156,12 @@ body {
 }
 
 .header-tagline {
-  font-family: var(--font-body);
-  font-size: 0.72rem;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
   font-weight: 400;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--warm-gray);
+  color: var(--tg-cinza-quente);
 }
 
 /* ── Form Card ─────────────────────────────────────────────── */
@@ -172,10 +170,11 @@ body {
 }
 
 .form-card {
-  background: var(--cream);
+  background: var(--white);
   border-radius: var(--radius-xl);
   padding: 32px 24px 28px;
   box-shadow: var(--shadow-card);
+  border: 1px solid var(--tg-bege-areia);
   position: relative;
   overflow: hidden;
 }
@@ -214,7 +213,7 @@ body {
   margin-top: 10px;
   font-size: 0.84rem;
   line-height: 1.65;
-  color: #5a5a6e;
+  color: var(--tg-cinza-quente);
   font-weight: 400;
 }
 
@@ -244,12 +243,13 @@ body {
 .field-group label,
 .label-section {
   display: block;
-  font-size: 0.78rem;
+  font-size: 0.72rem;
   font-weight: 500;
-  color: #444;
-  letter-spacing: 0.04em;
+  color: var(--tg-azul-marinho);
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   margin-bottom: 7px;
+  font-family: var(--font-mono);
 }
 
 .required {
@@ -272,11 +272,11 @@ input[type="email"] {
   height: 48px;
   padding: 0 14px;
   font-family: var(--font-body);
-  font-size: 1rem; /* 16px mínimo — evita auto-zoom do iOS sem travar acessibilidade */
+  font-size: 1rem;
   font-weight: 400;
-  color: var(--black);
+  color: var(--tg-azul-marinho);
   background: var(--white);
-  border: 1.5px solid var(--gray-mid);
+  border: 1.5px solid var(--tg-bege-areia);
   border-radius: var(--radius-md);
   outline: none;
   transition: border-color var(--transition), box-shadow var(--transition);
@@ -314,12 +314,13 @@ input.invalid {
 
 /* ── Radio buttons (LGPD autoriza) ────────────────────────── */
 .field-group--radio .label-section {
-  font-size: 0.78rem;
-  line-height: 1.5;
+  font-family: var(--font-body);
+  font-size: 0.84rem;
+  line-height: 1.6;
   text-transform: none;
   letter-spacing: 0;
   font-weight: 400;
-  color: #333;
+  color: var(--tg-azul-marinho);
   margin-bottom: 10px;
 }
 
@@ -335,9 +336,9 @@ input.invalid {
   cursor: pointer;
   font-size: 0.9rem;
   font-weight: 400;
-  color: #333;
+  color: var(--tg-azul-marinho);
   padding: 10px 16px;
-  border: 1.5px solid var(--gray-mid);
+  border: 1.5px solid var(--tg-bege-areia);
   border-radius: var(--radius-md);
   flex: 1;
   transition: border-color var(--transition), background var(--transition);
@@ -407,7 +408,7 @@ input.invalid {
   gap: 8px;
   cursor: pointer;
   font-size: 0.88rem;
-  color: #333;
+  color: var(--tg-azul-marinho);
   font-weight: 400;
 }
 
@@ -451,9 +452,10 @@ input.invalid {
 
 /* ── LGPD notice ───────────────────────────────────────────── */
 .lgpd-notice {
-  font-size: 0.68rem;
-  color: #999;
-  line-height: 1.5;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--tg-cinza-suave);
+  line-height: 1.6;
   text-align: center;
   margin-bottom: 20px;
   padding: 0 8px;
@@ -570,7 +572,7 @@ input.invalid {
   width: auto;
   display: block;
   margin: 0 auto 20px;
-  filter: drop-shadow(0 4px 16px rgba(0,0,0,0.35));
+  filter: drop-shadow(0 2px 8px rgba(11,30,63,0.15));
   animation: fadeUp 0.5s ease 0.2s both;
 }
 
@@ -578,7 +580,7 @@ input.invalid {
   font-family: var(--font-display);
   font-size: 1.8rem;
   font-weight: 700;
-  color: var(--white);
+  color: var(--tg-azul-marinho);
   letter-spacing: 0.04em;
   display: block;
   margin-bottom: 16px;
@@ -589,7 +591,7 @@ input.invalid {
   font-family: var(--font-display);
   font-size: 2rem;
   font-weight: 700;
-  color: var(--white);
+  color: var(--tg-azul-marinho);
   letter-spacing: -0.02em;
   margin-bottom: 8px;
   animation: fadeUp 0.5s ease 0.3s both;
@@ -597,7 +599,7 @@ input.invalid {
 
 .success-subhead {
   font-size: 0.86rem;
-  color: var(--warm-gray);
+  color: var(--tg-cinza-quente);
   line-height: 1.65;
   font-weight: 400;
   animation: fadeUp 0.5s ease 0.4s both;
@@ -615,13 +617,12 @@ input.invalid {
 
 /* ── Links do sucesso ──────────────────────────────────────── */
 .success-links {
-  background: rgba(255,255,255,0.07);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255,255,255,0.12);
+  background: var(--white);
+  border: 1px solid var(--tg-bege-areia);
   border-radius: var(--radius-xl);
   padding: 20px 16px 24px;
   text-align: left;
+  box-shadow: var(--shadow-card);
 }
 
 .links-block {
@@ -684,9 +685,9 @@ input.invalid {
 }
 
 .link-btn--site {
-  background: rgba(255,255,255,0.12);
+  background: var(--tg-azul-marinho);
   color: var(--white);
-  border: 1px solid rgba(255,255,255,0.25);
+  border: 1px solid var(--tg-azul-marinho);
 }
 
 .link-btn--whatsapp {
@@ -705,33 +706,33 @@ input.invalid {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 14px 16px;          /* área de toque maior para mobile */
+  padding: 14px 16px;
   min-height: 52px;
-  background: rgba(255,255,255,0.07);
-  border: 1px solid rgba(255,255,255,0.1);
+  background: var(--cream);
+  border: 1px solid var(--tg-bege-areia);
   border-radius: var(--radius-md);
   text-decoration: none;
-  color: var(--white);
+  color: var(--tg-azul-marinho);
   -webkit-tap-highlight-color: transparent;
   transition: background var(--transition), border-color var(--transition);
 }
 
 .city-link:active {
-  background: rgba(255,255,255,0.16);
-  border-color: rgba(255,255,255,0.25);
+  background: var(--tg-bege-areia);
+  border-color: var(--tg-dourado);
 }
 
 @media (hover: hover) {
   .city-link:hover {
-    background: rgba(255,255,255,0.12);
-    border-color: rgba(255,255,255,0.22);
+    background: var(--tg-bege-areia);
+    border-color: var(--tg-azul-marinho);
   }
 }
 
 .city-name {
   font-size: 0.95rem;
   font-weight: 500;
-  color: var(--white);
+  color: var(--tg-azul-marinho);
   flex: 1;
 }
 
@@ -744,12 +745,12 @@ input.invalid {
 
 /* Footer do sucesso */
 .success-footer {
-  font-size: 0.68rem;
-  color: var(--warm-gray);
-  opacity: 0.7;
+  font-family: var(--font-mono);
+  font-size: 0.63rem;
+  color: var(--tg-cinza-suave);
   text-align: center;
   margin-top: 24px;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 
@@ -775,10 +776,10 @@ input.invalid {
 }
 
 @media (prefers-color-scheme: dark) {
-  /* Preserva o design claro do card mesmo em dark mode do sistema */
+  /* Preserva o território institucional mesmo em dark mode do sistema */
   .form-card {
-    background: var(--cream);
-    color: var(--black);
+    background: var(--white);
+    color: var(--tg-azul-marinho);
   }
 }
 
