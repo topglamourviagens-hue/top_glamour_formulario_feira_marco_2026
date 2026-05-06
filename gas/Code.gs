@@ -77,7 +77,11 @@ function doPost(e) {
     let nextId;
     try {
       const sheet = getOrCreateSheet(SHEET_NAME);
-      nextId = sheet.getLastRow(); // cabeçalho = linha 1, logo lead #1 = linha 2
+      const lastRow = sheet.getLastRow();
+      const existingIds = lastRow > 1
+        ? sheet.getRange(2, 1, lastRow - 1, 1).getValues().flat().map(Number)
+        : [];
+      nextId = existingIds.length > 0 ? Math.max(...existingIds) + 1 : 1;
       const timestamp = Utilities.formatDate(
         new Date(),
         'America/Sao_Paulo',
