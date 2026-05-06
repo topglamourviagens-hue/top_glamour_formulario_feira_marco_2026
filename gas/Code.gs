@@ -24,14 +24,26 @@ const SUBMIT_TOKEN = 'tg2026feira'; // deve coincidir com script.js
 // ─────────────────────────────────────────────────────────────
 // ENDPOINT PRINCIPAL — recebe dados do formulário HTML
 // ─────────────────────────────────────────────────────────────
+// Sanitiza valor para prevenir formula injection no Google Sheets
+function sanitizeCell(value) {
+  const s = String(value == null ? '' : value).trim();
+  return /^[=+\-@|]/.test(s) ? "'" + s : s;
+}
+
 function doPost(e) {
   try {
     const raw = e.postData ? e.postData.contents : '';
     if (!raw) throw new Error('Payload vazio');
 
-    const data = JSON.parse(raw);
+    let data;
+    try {
+      data = JSON.parse(raw);
+    } catch (_) {
+      throw new Error('Payload malformado');
+    }
 
     // Validação de token anti-spam
+    // NOTA: token visível publicamente por design do GAS/no-cors — rotacionar após cada evento
     if (data.token !== SUBMIT_TOKEN) {
       throw new Error('Token inválido');
     }
@@ -40,13 +52,27 @@ function doPost(e) {
     const required = ['nome', 'whatsapp', 'email', 'cidade', 'autoriza'];
     for (const field of required) {
       if (!data[field] || data[field].toString().trim() === '') {
-        throw new Error(`Campo obrigatório ausente: ${field}`);
+        throw new Error('Campo obrigatorio ausente: ' + field);
       }
+    }
+
+    // Validação de formato (backend — não confiar só no frontend)
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+    if (!emailRegex.test(data.email.trim())) {
+      throw new Error('E-mail invalido');
+    }
+    const waDigits = data.whatsapp.replace(/\D/g, '');
+    if (waDigits.length < 10 || waDigits.length > 11) {
+      throw new Error('WhatsApp invalido');
     }
 
     // LockService — evita IDs duplicados em submits simultâneos
     const lock = LockService.getScriptLock();
-    lock.waitLock(15000);
+    try {
+      lock.waitLock(8000);
+    } catch (_lockErr) {
+      throw new Error('Sistema ocupado — tente novamente em instantes');
+    }
 
     let nextId;
     try {
@@ -59,16 +85,16 @@ function doPost(e) {
       );
 
       sheet.appendRow([
-        nextId,        // #Sorteio: igual ao número de leads anteriores (correto por design)
+        nextId,
         timestamp,
-        data.nome.trim(),
-        data.whatsapp.trim(),
-        data.email.trim(),
-        data.cidade.trim(),
-        (data.sonha || '').trim(),
-        data.autoriza.trim(),
-        data.promoWhatsapp || 'Não',
-        data.promoEmail || 'Não',
+        sanitizeCell(data.nome),
+        sanitizeCell(data.whatsapp),
+        sanitizeCell(data.email),
+        sanitizeCell(data.cidade),
+        sanitizeCell(data.sonha || ''),
+        sanitizeCell(data.autoriza),
+        data.promoWhatsapp === 'Sim' ? 'Sim' : 'Nao',
+        data.promoEmail    === 'Sim' ? 'Sim' : 'Nao',
         'HTML'
       ]);
 
@@ -151,7 +177,7 @@ function getOrCreateSheet(sheetName) {
 function setupHeaders(sheet) {
   const headers = [
     '#Sorteio', 'Data/Hora', 'Nome Completo', 'WhatsApp',
-    'E-mail', 'Cidade/Estado', 'Cidade Sonha Conhecer',
+    'E-mail', 'Cidade/Estado', 'Proximo Destino dos Sonhos',
     'Autoriza Contato', 'Promo WhatsApp', 'Promo E-mail', 'Origem'
   ];
 

@@ -8,6 +8,7 @@
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <link rel="icon" type="image/png" sizes="32x32" href="favicon.ico">
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+  <link rel="preload" as="image" href="assets/logo-azul.webp" type="image/webp">
 
   <!-- Google Fonts: Cormorant Garamond (display) + Inter (corpo) + JetBrains Mono (captions) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -41,12 +42,15 @@
 
           <div class="card-headline">
             <div class="headline-row">
-              <img
-                src="assets/logo%20azul.jpeg"
-                alt="Top Glamour Viagens"
-                class="card-logo"
-                onerror="this.style.display='none';"
-              >
+              <picture>
+                <source srcset="assets/logo-azul.webp" type="image/webp">
+                <img
+                  src="assets/logo%20azul.jpeg"
+                  alt="Top Glamour Viagens"
+                  class="card-logo"
+                  width="64" height="64"
+                >
+              </picture>
               <h1>Concorra a uma<br><em>mala de viagens</em></h1>
             </div>
             <p class="card-subheadline">
@@ -215,12 +219,16 @@
           </div>
         </div>
 
-        <img
-          src="assets/logo%20azul.jpeg"
-          alt="Top Glamour Viagens"
-          class="logo logo--success"
-          onerror="this.style.display='none'; document.querySelector('.logo-fallback-success').style.display='block';"
-        >
+        <picture>
+          <source srcset="assets/logo-azul.webp" type="image/webp">
+          <img
+            src="assets/logo%20azul.jpeg"
+            alt="Top Glamour Viagens"
+            class="logo logo--success"
+            width="100" height="100"
+            onerror="this.style.display='none'; document.querySelector('.logo-fallback-success').style.display='block';"
+          >
+        </picture>
         <span class="logo-fallback-success" style="display:none;">Top Glamour Viagens</span>
 
         <h2 class="success-headline">Participação confirmada.</h2>

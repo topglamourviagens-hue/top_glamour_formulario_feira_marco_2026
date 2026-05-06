@@ -4,7 +4,8 @@
 // ============================================================
 
 const GAS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbzYM0kC63PqHK43fpDtxyfWx4DyoKgUNDazta-R2PLKlvb2mLp5TbMy_IGfSPHbGFYgfA/exec';
-const SUBMIT_TOKEN   = 'tg2026feira'; // token simples anti-spam (deve coincidir com Code.gs)
+// NOTA: token anti-spam visível publicamente por design do GAS/no-cors. Rotacionar após cada evento.
+const SUBMIT_TOKEN   = 'tg2026feira';
 
 // ─────────────────────────────────────────────────────────────
 // Referências DOM
@@ -29,14 +30,6 @@ form.addEventListener('submit', function (e) {
     return;
   }
 
-  // Verificação extra: URL do GAS configurada
-  if (GAS_WEB_APP_URL === 'COLE_A_URL_DO_WEB_APP_AQUI') {
-    console.warn(
-      '[Top Glamour] ⚠️ GAS_WEB_APP_URL não configurada.\n' +
-      'Faça o deploy do Code.gs e cole a URL nesta variável.'
-    );
-  }
-
   // Ativar estado de carregamento
   btnSubmit.disabled = true;
   btnSubmit.classList.add('loading');
@@ -54,25 +47,41 @@ form.addEventListener('submit', function (e) {
     token:         SUBMIT_TOKEN,
   };
 
-  // Buffer local — seguro contra falha de rede em 4G instável
+  // Buffer local — seguro contra falha de rede em 4G instável (LGPD: removido após envio)
+  var storageKey = 'tg_lead_' + Date.now();
   try {
-    localStorage.setItem('tg_lead_' + Date.now(), JSON.stringify(payload));
+    localStorage.setItem(storageKey, JSON.stringify(payload));
   } catch (_storageErr) { /* localStorage indisponível — continuar normalmente */ }
 
-  // Envio fire-and-forget (no-cors necessário para GAS Web App)
-  // A tela de sucesso é exibida otimisticamente — dados já estão no localStorage como backup
-  fetch(GAS_WEB_APP_URL, {
+  // Envio com retry (3 tentativas, backoff 3s) — no-cors necessário para GAS Web App
+  sendWithRetry(GAS_WEB_APP_URL, JSON.stringify(payload), 3, storageKey);
+
+  // Mostrar tela de sucesso otimisticamente — localStorage é o backup para falhas persistentes
+  setTimeout(showSuccess, 1600);
+});
+
+// ─────────────────────────────────────────────────────────────
+// Envio com retry + limpeza de PII do localStorage
+// ─────────────────────────────────────────────────────────────
+function sendWithRetry(url, body, attempts, storageKey) {
+  fetch(url, {
     method:  'POST',
     mode:    'no-cors',
     headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-    body:    JSON.stringify(payload),
+    body:    body,
+  }).then(function () {
+    // Sucesso: remove PII do localStorage (LGPD)
+    try { localStorage.removeItem(storageKey); } catch (_) {}
   }).catch(function (err) {
-    console.warn('[Top Glamour] Aviso de rede — dado salvo em localStorage:', err.message);
+    if (attempts > 1) {
+      setTimeout(function () {
+        sendWithRetry(url, body, attempts - 1, storageKey);
+      }, 3000);
+    } else {
+      console.warn('[Top Glamour] Falha de envio após 3 tentativas — dado preservado em localStorage:', err.message);
+    }
   });
-
-  // Mostrar tela de sucesso após breve delay (UX otimista)
-  setTimeout(showSuccess, 1600);
-});
+}
 
 // ─────────────────────────────────────────────────────────────
 // Transição para tela de sucesso
