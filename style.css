@@ -532,70 +532,80 @@ input.invalid {
   max-width: 480px;
 }
 
-/* Header da tela de sucesso — logo em destaque */
-.site-header--success {
-  padding: 20px 0 24px;
-  text-align: center;
+.site-header--success { display: none; }
+
+.success-main {
+  padding: 0 4px;
+  animation: fadeUp 0.5s ease 0.1s both;
 }
 
-/* Selo de confirmação — acima da logo */
-.success-stamp {
-  width: 64px;
-  height: 64px;
-  background: linear-gradient(135deg, var(--gold), var(--gold-bright));
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto 20px;
-  box-shadow: 0 0 0 6px rgba(212,145,44,0.18), 0 8px 24px rgba(212,145,44,0.45);
-  animation: stampIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s both;
+/* Topo do card — espelho exato do .card-headline */
+.success-card-top {
+  margin-bottom: 20px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--tg-bege-areia);
 }
 
-@keyframes stampIn {
-  from { transform: scale(0.4) rotate(-15deg); opacity: 0; }
-  to   { transform: scale(1) rotate(0deg); opacity: 1; }
-}
-
-.stamp-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--white);
-}
-
-/* Logo + título inline na tela de sucesso */
+/* Idêntico ao .headline-row do form card */
 .success-headline-row {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 14px;
+  gap: 16px;
   margin-bottom: 10px;
-  animation: fadeUp 0.5s ease 0.2s both;
 }
 
+/* Mesma altura do .card-logo */
 .success-logo-inline {
-  height: 56px;
+  height: 64px;
   width: auto;
   flex-shrink: 0;
 }
 
-.success-headline {
-  font-family: var(--font-display);
-  font-size: 2rem;
-  font-weight: 700;
-  color: var(--tg-azul-marinho);
-  letter-spacing: -0.02em;
-  margin: 0;
-  text-align: left;
+.success-headline-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
+/* Mesmo estilo do h1 do form card */
+.success-headline {
+  font-family: var(--font-display);
+  font-size: 1.85rem;
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--navy);
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+
+/* Badge dourado — substitui o <em> italic do form */
+.stamp-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: linear-gradient(135deg, var(--gold), var(--gold-bright));
+  color: var(--navy);
+  border-radius: 100px;
+  padding: 2px 10px 2px 6px;
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 700;
+  width: fit-content;
+  animation: stampIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s both;
+}
+
+@keyframes stampIn {
+  from { transform: scale(0.6); opacity: 0; }
+  to   { transform: scale(1); opacity: 1; }
+}
+
+/* Mesmo estilo do .card-subheadline */
 .success-subhead {
-  font-size: 0.86rem;
-  color: var(--tg-cinza-quente);
+  margin-top: 10px;
+  font-size: 0.84rem;
   line-height: 1.65;
+  color: var(--tg-cinza-quente);
   font-weight: 400;
-  animation: fadeUp 0.5s ease 0.4s both;
 }
 
 .success-main {
@@ -608,14 +618,25 @@ input.invalid {
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* ── Links do sucesso ──────────────────────────────────────── */
+/* ── Links do sucesso — espelho do form-card ───────────────── */
 .success-links {
   background: var(--white);
   border: 1px solid var(--tg-bege-areia);
   border-radius: var(--radius-xl);
-  padding: 20px 16px 24px;
+  padding: 32px 24px 28px;
   text-align: left;
+  position: relative;
+  overflow: hidden;
   box-shadow: var(--shadow-card);
+}
+
+/* Borda âmbar superior — idêntica ao form-card */
+.success-links::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--navy), var(--gold), var(--gold-bright), var(--gold), var(--navy));
 }
 
 .links-block {
@@ -667,8 +688,9 @@ input.invalid {
 }
 
 .link-btn--instagram {
-  background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045);
-  color: var(--white);
+  background: linear-gradient(135deg, var(--gold), var(--gold-bright));
+  color: var(--navy);
+  font-weight: 700;
 }
 
 .link-row {
