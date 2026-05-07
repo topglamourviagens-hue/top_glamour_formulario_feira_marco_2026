@@ -113,7 +113,7 @@ body {
 /* ── Header (compacto — logo migrou para o card) ───────────── */
 .site-header {
   text-align: center;
-  padding: 6px 0 5px;
+  padding: 3px 0 2px;
 }
 
 .logo-fallback {
@@ -128,7 +128,7 @@ body {
   display: flex;
   align-items: center;
   gap: 10px;
-  margin: 5px auto 4px;
+  margin: 2px auto 2px;
   width: 140px;
   color: var(--gold-bright);
 }
