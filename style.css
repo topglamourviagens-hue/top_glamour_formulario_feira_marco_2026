@@ -527,12 +527,12 @@ input.invalid {
 
 /* ── TELA DE SUCESSO ───────────────────────────────────────── */
 .page-wrapper--success {
-  padding-top: 16px;
+  padding-top: 0;
   padding-bottom: 48px;
   max-width: 480px;
 }
 
-.site-header--success { display: none; }
+.site-header--success { padding: 0; }
 
 .success-main {
   padding: 0 4px;
