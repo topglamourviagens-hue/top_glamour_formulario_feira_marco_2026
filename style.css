@@ -527,7 +527,7 @@ input.invalid {
 
 /* ── TELA DE SUCESSO ───────────────────────────────────────── */
 .page-wrapper--success {
-  padding-top: 0;
+  padding-top: 16px;
   padding-bottom: 48px;
   max-width: 480px;
 }
